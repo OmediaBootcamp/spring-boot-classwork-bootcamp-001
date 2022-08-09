@@ -1,11 +1,14 @@
-package dev.omedia;
+package dev.omedia.restws;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class App {
+public class DemoApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(DemoApplication.class, args);
     }
+
 }
+
