@@ -1,0 +1,6 @@
+services:
+  hello-spring:
+    container_name: hello-spring-java
+    build: .
+    ports:
+      - 80:8081
