@@ -16,6 +16,8 @@
     <description>My first spring boot application</description>
     <properties>
         <java.version>11</java.version>
+        <springdoc.version>1.6.9</springdoc.version>
+        <postgres.driver.version>42.4.1</postgres.driver.version>
     </properties>
     <dependencies>
         <!--STARTER LIBRARIES-->
@@ -23,11 +25,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!--DRIVERS-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+<!--        DRIVERS-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.4.1</version>
+            <version>${postgres.driver.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
         <!--TEST-->
         <dependency>
