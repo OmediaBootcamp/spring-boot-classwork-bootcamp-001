@@ -4,6 +4,7 @@ import dev.omedia.dto.User;
 import dev.omedia.exceptions.UserNotFoundException;
 import dev.omedia.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
@@ -40,16 +44,16 @@ public class UserController {
     @GetMapping
     @Operation(summary = "Get users")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found users", content = {@Content(mediaType = "application/json")}), @ApiResponse(responseCode = "500", description = "Server error", content = {@Content(mediaType = "application/json")})})
-    public Iterable<User> getUsers() {
-        return service.getUsers();
+    public Iterable<User> getUsers(@Parameter @RequestParam(required = false) final String name) {
+        return name == null ? service.getUsers() : service.getUserByName(name);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @Operation(summary = "Create user")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "User created", content = {@Content(mediaType = "application/json")}), @ApiResponse(responseCode = "500", description = "Server error", content = {@Content(mediaType = "application/json")})})
-    public void createUser(@RequestBody User user) {
-        service.createUser(user);
+    public User createUser(@RequestBody User user) {
+        return service.createUser(user);
     }
 
     @PutMapping("{id}")

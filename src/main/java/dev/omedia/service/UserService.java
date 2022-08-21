@@ -1,43 +1,42 @@
 package dev.omedia.service;
 
 import dev.omedia.dto.User;
-import org.hibernate.criterion.CriteriaQuery;
+import dev.omedia.repository.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final UserRepo userRepo;
 
-    public void createUser(User user) {
-        em.persist(user);
+    @Autowired
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    public User createUser(User user) {
+        return userRepo.save(user);
     }
 
     public Optional<User> getUserById(long id) {
-        TypedQuery<User> query = em.createQuery("select u from User u where u.id=:id", User.class);
-        List<User> resultList = query
-                .setParameter("id", id)
-                .getResultList();
-        return resultList.isEmpty() ? Optional.empty() : Optional.ofNullable(resultList.iterator().next());
+        return userRepo.findById(id);
     }
 
-    public Collection<User> getUsers() {
-        return em.createQuery("FROM User u ", User.class).getResultList();
+
+    public Iterable<User> getUserByName(String name) {
+        return userRepo.getUserByName(name);
+    }
+
+    public Iterable<User> getUsers() {
+        return userRepo.findAll();
     }
 
     public User updateUser(long id, User user) {
         user.setId(id);
-        return em.merge(user);
+        return userRepo.save(user);
     }
 
 }
