@@ -9,11 +9,19 @@ public class Customer {
         this.user = user;
     }
 
+    public Customer(long id, String name) {
+        this.user = new User(id, name);
+    }
+
     public long getIdentification() {
         return user.getId();
     }
 
     public void setIdentification(long identification) {
         this.user.setId(identification);
+    }
+
+    public String getName() {
+        return user.getName();
     }
 }
