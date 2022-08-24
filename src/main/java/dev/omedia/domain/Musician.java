@@ -1,6 +1,7 @@
 package dev.omedia.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,12 +17,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name = "musician")
+@Table(name = "musicians")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -45,4 +47,8 @@ public class Musician {
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "genre_id")
     )
     private Set<Genre> genres;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "musician")
+    private Set<Song> songs;
 }
