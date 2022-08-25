@@ -1,6 +1,6 @@
 package dev.omedia.repository;
 
-import dev.omedia.domain.Genre;
+import dev.omedia.domain.music.Genre;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

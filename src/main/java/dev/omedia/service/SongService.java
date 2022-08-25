@@ -1,10 +1,11 @@
 package dev.omedia.service;
 
-import dev.omedia.domain.Song;
+import dev.omedia.domain.music.Song;
 import dev.omedia.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,10 @@ public class SongService {
 
     public Optional<Song> getById(final long id) {
         return repo.findById(id);
+    }
+
+    public Iterable<Song> getByMusicianGenreId(long id){
+        return repo.findSongByMusicianGenresIdIn(List.of(id));
     }
 
     public Song update(Song song) {

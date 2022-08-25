@@ -1,7 +1,7 @@
 package dev.omedia.controller;
 
 
-import dev.omedia.domain.Genre;
+import dev.omedia.domain.music.Genre;
 import dev.omedia.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package dev.omedia.service;
 
-import dev.omedia.domain.Genre;
+import dev.omedia.domain.music.Genre;
 import dev.omedia.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

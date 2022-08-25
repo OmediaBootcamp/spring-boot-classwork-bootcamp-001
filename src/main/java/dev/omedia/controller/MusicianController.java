@@ -1,7 +1,7 @@
 package dev.omedia.controller;
 
 
-import dev.omedia.domain.Musician;
+import dev.omedia.domain.music.Musician;
 import dev.omedia.service.MusicianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +44,11 @@ public class MusicianController {
     public Musician update(@PathVariable long id, @RequestBody Musician musician) {
         musician.setId(id);
         return service.update(musician);
+    }
+
+    @PutMapping()
+    public void update() {
+        service.update();
     }
 
     @PostMapping

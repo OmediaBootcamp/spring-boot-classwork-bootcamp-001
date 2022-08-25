@@ -1,7 +1,7 @@
 package dev.omedia.controller;
 
 
-import dev.omedia.domain.Song;
+import dev.omedia.domain.music.Song;
 import dev.omedia.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +30,8 @@ public class SongController {
     }
 
     @GetMapping
-    public Iterable<Song> getSongs() {
-        return service.getAll();
+    public Iterable<Song> getSongs(@RequestParam(name = "mgid", required = false, defaultValue = "0") long genreId) {
+        return genreId == 0 ? service.getAll() : service.getByMusicianGenreId(genreId);
     }
 
     // fixme

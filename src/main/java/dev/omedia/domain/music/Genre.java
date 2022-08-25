@@ -1,4 +1,4 @@
-package dev.omedia.domain;
+package dev.omedia.domain.music;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

@@ -1,6 +1,6 @@
 package dev.omedia.service;
 
-import dev.omedia.domain.Musician;
+import dev.omedia.domain.music.Musician;
 import dev.omedia.repository.MusicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +28,10 @@ public class MusicianService {
         // TODO throw Exception if doesn't exist;
         repo.existsById(musician.getId());
         return repo.save(musician);
+    }
+
+    public void update() {
+        repo.updateNullNames("Andrea Bocelli");
     }
 
 
