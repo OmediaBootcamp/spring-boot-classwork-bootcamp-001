@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
+
 @RestController
 @RequestMapping("songs")
 //TODO add descriptions
@@ -48,7 +51,7 @@ public class SongController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Song create(@RequestBody Song song) {
+    public Song create(@Valid @RequestBody Song song) {
         return service.create(song);
     }
 

@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +20,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+
+@Validated
 @Entity
 @Table(name = "songs")
 @Getter
@@ -35,6 +39,7 @@ public class Song {
     @SequenceGenerator(name = "song_id_gen", sequenceName = "song_id_seq", allocationSize = 1)
     private long id;
 
+    @NotNull(message = "სახელი სავალდბულო ველია")
     @Column(name = "name", nullable = false)
     private String name;
 
