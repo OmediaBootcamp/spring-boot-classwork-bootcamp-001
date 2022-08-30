@@ -2,11 +2,7 @@ package dev.omedia.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -29,7 +26,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Musician {
+@ToString
+public class Musician implements Serializable {
     @Id
     @Column(name = "musician_id")
     @EqualsAndHashCode.Include
@@ -50,5 +48,5 @@ public class Musician {
 
     @JsonIgnore
     @OneToMany(mappedBy = "musician")
-    private Set<Song> songs;
+    transient private Set<Song> songs;
 }

@@ -3,6 +3,7 @@ package dev.omedia.service;
 import dev.omedia.domain.Genre;
 import dev.omedia.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ public class GenreService {
         this.repo = repo;
     }
 
+    @Cacheable("genres")
     public Iterable<Genre> getAll() {
         return repo.findAll();
     }
