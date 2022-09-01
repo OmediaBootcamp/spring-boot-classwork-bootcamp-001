@@ -1,8 +1,9 @@
 package dev.omedia.controller;
 
 
-import dev.omedia.domain.Song;
-import dev.omedia.service.SongService;
+import dev.omedia.domain.LegalEntity;
+import dev.omedia.domain.Owner;
+import dev.omedia.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,45 +15,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
-
 @RestController
-@RequestMapping("songs")
+@RequestMapping("Owners")
 //TODO add descriptions
 //TODO add logs
 //TODO add exceptions
-public class SongController {
+public class OwnerController {
 
-    private final SongService service;
+    private final OwnerService service;
 
     @Autowired
-    public SongController(SongService service) {
+    public OwnerController(OwnerService service) {
         this.service = service;
     }
 
     @GetMapping
-    public Iterable<Song> getSongs() {
+    public Iterable<? extends Owner> getOwners() {
         return service.getAll();
     }
 
     // fixme
     @GetMapping("{id}")
-    public Song getSongById(@PathVariable long id) {
+    public Owner getOwnerById(@PathVariable long id) {
         return service.getById(id).orElseThrow(RuntimeException::new);
     }
 
 
     @PutMapping("{id}")
-    public Song update(@PathVariable long id, @RequestBody Song song) {
-        song.setId(id);
-        return service.update(song);
+    public Owner update(@PathVariable long id, @RequestBody Owner owner) {
+        owner.setId(id);
+        return service.update(owner);
     }
+
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Owner create(@RequestBody Owner owner) {
+//        return service.create(owner);
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Song create(@Valid @RequestBody Song song) {
-        return service.create(song);
+    public Owner create() {
+        Owner owner = new LegalEntity(0, null, "123456789", "IT");
+        return service.create(owner);
     }
 
 

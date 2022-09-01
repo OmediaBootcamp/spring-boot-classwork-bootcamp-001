@@ -1,37 +1,37 @@
 package dev.omedia.service;
 
-import dev.omedia.domain.Genre;
-import dev.omedia.repository.GenreRepository;
+import dev.omedia.domain.Owner;
+import dev.omedia.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class GenreService {
-    private final GenreRepository repo;
-    
+public class OwnerService {
+    private final OwnerRepository repo;
+
     @Autowired
-    public GenreService(GenreRepository repo) {
+    public OwnerService(OwnerRepository repo) {
         this.repo = repo;
     }
 
-    public Iterable<Genre> getAll() {
+    public Iterable<Owner> getAll() {
         return repo.findAll();
     }
 
-    public Optional<Genre> getById(final long id) {
+    public Optional<Owner> getById(final long id) {
         return repo.findById(id);
     }
 
-    public Genre update(Genre genre) {
+    public Owner update(Owner genre) {
         // TODO throw Exception if doesn't exist;
         repo.existsById(genre.getId());
         return repo.save(genre);
     }
 
 
-    public Genre create(Genre genre) {
+    public Owner create(Owner genre) {
         // TODO throw Exception if exists;
         repo.existsById(genre.getId());
         return repo.save(genre);
