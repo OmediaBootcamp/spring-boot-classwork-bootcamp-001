@@ -24,7 +24,6 @@ public class Beans {
         return new RestTemplate();
     }
 
-    UriBuilderFactory
     @Bean("personServiceURIBuilder") // is not best practise
     public UriComponentsBuilder uriBuilder() {
         return UriComponentsBuilder.newInstance()
