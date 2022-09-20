@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "Employee",
+  "namespace": "dev.omedia.models",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "lastName",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "age",
+      "type": "int"
+    }
+  ]
+}

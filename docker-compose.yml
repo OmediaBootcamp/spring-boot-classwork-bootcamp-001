@@ -49,3 +49,31 @@ services:
       ZK_HOSTS: zookeeper:2181
       APPLICATION_SECRET: letmein
       KM_ARGS: -Djava.net.preferIPv4Stack=true
+
+  schema_registry:
+    image: confluentinc/cp-schema-registry:5.4.0
+    hostname: schema_registry
+    container_name: schema_registry
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
+      SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_ORIGIN: '*'
+      SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_METHODS: 'GET,POST,PUT,OPTIONS'
+
+  schema-registry-ui:
+    image: landoop/schema-registry-ui
+    hostname: schema-registry-ui
+    depends_on:
+      - kafka
+      - schema_registry
+    ports:
+      - "8002:8000"
+    environment:
+      SCHEMAREGISTRY_URL: 'schema_registry:8081'
+      PROXY: "true"

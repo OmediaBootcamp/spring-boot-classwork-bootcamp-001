@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "Car",
+  "namespace": "dev.omedia.models",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "year",
+      "type": "int"
+    }
+  ]
+}
