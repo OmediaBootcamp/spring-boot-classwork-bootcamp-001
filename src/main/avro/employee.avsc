@@ -13,11 +13,7 @@
     },
     {
       "name": "lastName",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
+      "type": "string"
     },
     {
       "name": "age",
