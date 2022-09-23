@@ -2,11 +2,8 @@ package dev.omedia.controller;
 
 import dev.omedia.domain.Car;
 import dev.omedia.service.CarService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/car")
@@ -19,6 +16,7 @@ public class CarController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Car createCar(Car car) {
         return carService.createCar(car);
     }
@@ -28,8 +26,8 @@ public class CarController {
         return carService.getAllCars();
     }
 
-    @GetMapping("/{id}")
-    public Car getCarById(@PathVariable Integer id) {
-        return carService.getCar(id);
+    @GetMapping("/{uuid}")
+    public Car getCarById(@PathVariable String uuid) {
+        return carService.getCar(uuid);
     }
 }

@@ -1,14 +1,73 @@
-version: '3.1'
-
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    volumes:
+      - ./zoo/data:/var/lib/zookeeper/data
+      - ./zoo/log:/var/lib/zookeeper/log
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+      - 9999:9999
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_JMX_HOSTNAME: "kafka"
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_OPTS: "-Djava.rmi.server.hostname=kafka-1 
+      -Dcom.sun.management.jmxremote.local.only=false 
+      -Dcom.sun.management.jmxremote.rmi.port=9999 
+      -Dcom.sun.management.jmxremote.port=9999 
+      -Dcom.sun.management.jmxremote.authenticate=false 
+      -Dcom.sun.management.jmxremote.ssl=false"
+    volumes:
+      - ./broker/data:/var/lib/kafka/data
+
+  kafka-manager:
+    image: kafkamanager/kafka-manager:latest
+    ports:
+      - "9000:9000"
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      ZK_HOSTS: zookeeper:2181
+      APPLICATION_SECRET: letmein
+      KM_ARGS: -Djava.net.preferIPv4Stack=true
+
+#  app:
+#    container_name: app-java
+#    build: .
+#    depends_on:
+#      - db
+#    environment:
+#      - spring.datasource.url=jdbc:postgresql://db:5432/postgres
+#      - spring.datasource.username=postgres
+#      - spring.datasource.password=postgres
+#      - spring.datasource.driver-class-name=org.postgresql.Driver
+#    ports:
+#      - 8080:8080
   db:
     image: postgres:latest
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER =postgres
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-    ports:
-      - "54321:5432"
     restart: always
+    ports:
+      - 5432:5432
     volumes:
       - ./database-data:/var/lib/postgresql/data/

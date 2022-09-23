@@ -3,6 +3,7 @@ package dev.omedia.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ public class Audit {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime localDateTime;
 
     private String updates;
