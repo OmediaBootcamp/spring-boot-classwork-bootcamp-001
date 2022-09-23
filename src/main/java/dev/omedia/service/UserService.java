@@ -1,7 +1,6 @@
 package dev.omedia.service;
 
 import dev.omedia.domain.User;
-import dev.omedia.messaging.KafkaPureProducer;
 import dev.omedia.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +8,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    private final KafkaPureProducer kafkaPureProducer;
-
-    public UserService(UserRepository userRepository, KafkaPureProducer kafkaPureProducer) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.kafkaPureProducer = kafkaPureProducer;
     }
 
     public User createUser(User user) {
-        kafkaPureProducer.produceUser(user);
+        //        produce user message / or audit message as you decide
         return userRepository.save(user);
     }
 

@@ -1,23 +1,19 @@
 package dev.omedia.service;
 
 import dev.omedia.domain.Car;
-import dev.omedia.messaging.KafkaPureProducer;
 import dev.omedia.repository.CarRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Service
 public class CarService {
     private final CarRepository carRepository;
-    private final KafkaPureProducer kafkaPureProducer;
 
-    public CarService(CarRepository carRepository, KafkaPureProducer kafkaPureProducer) {
+    public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.kafkaPureProducer = kafkaPureProducer;
     }
 
     public Car createCar(Car car) {
-        kafkaPureProducer.produceCar(car);
+//        produce car message / or audit message as you decide
         return carRepository.save(car);
     }
 
